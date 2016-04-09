@@ -10,12 +10,17 @@ namespace GuildManagement.DataLayer
     public class DatabaseRepository : IDatabaseRepository
     {
         static ConcurrentDictionary<string, Guild> _guilds = new ConcurrentDictionary<string, Guild>();
+        static ConcurrentDictionary<string, Character> _characters = new ConcurrentDictionary<string, Character>();
+
+
 
         public DatabaseRepository()
         {
             Add(new Guild() { Name = "Windburst" });
+            Add(new Character() { Name = "TestToon" } );
         }
 
+        #region Guilds
         public IEnumerable<Guild> GetAllGuilds()
         {
             return _guilds.Values;
@@ -44,7 +49,7 @@ namespace GuildManagement.DataLayer
             return GetAllGuilds();
         }
 
-        public IEnumerable<Guild> Delete(string key)
+        public IEnumerable<Guild> DeleteGuild(string key)
         {
             Guild guild;
             _guilds.TryGetValue(key, out guild);
@@ -52,5 +57,45 @@ namespace GuildManagement.DataLayer
 
             return GetAllGuilds();
         }
+        #endregion
+
+        #region Characters
+        public IEnumerable<Character> GetAllCharacters()
+        {
+            return _characters.Values;
+        }
+
+        public Character GetCharacter(string key)
+        {
+            Character character;
+            _characters.TryGetValue(key, out character);
+
+            return character;
+        }
+
+        public IEnumerable<Character> Add(Character character)
+        {
+            character.Key = Guid.NewGuid().ToString();
+            _characters[character.Key] = character;
+
+            return GetAllCharacters();
+        }
+
+        public IEnumerable<Character> Update(string key, Character character)
+        {
+            _characters[key] = character;
+
+            return GetAllCharacters();
+        }
+
+        public IEnumerable<Character> DeleteCharacter(string key)
+        {
+            Character character;
+            _characters.TryGetValue(key, out character);
+            _characters.TryRemove(key, out character);
+
+            return GetAllCharacters();
+        }
+        #endregion
     }
 }
