@@ -13,6 +13,5 @@ namespace GuildManagement.Models
         Guild GetGuild(string key);
         IEnumerable<Guild> Delete(string key);
         IEnumerable<Guild> Update(string key, Guild guild);
-        string APIKey();
     }
 }

@@ -39,23 +39,12 @@ namespace GuildManagement.Models
         public IEnumerable<Guild> Delete(string key)
         {
             
-            return _databaseRepository.Delete(key);
+            return _databaseRepository.DeleteGuild(key);
         }
 
         public IEnumerable<Guild> Update(string key, Guild guild)
         {
             return _databaseRepository.Update(key, guild);
-        }
-
-        public string APIKey()
-        {
-            return _blizzardConnectionRepository.APIKey();
-        }
-
-        public void SyncGuild(string name, string realm)
-        {
-
-
         }
     }
 }

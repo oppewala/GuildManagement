@@ -23,11 +23,6 @@ namespace GuildManagement.Controllers
         [HttpGet("{key}", Name = "GetGuild")]
         public IActionResult GetByID(string key)
         {
-            if (key == "api")
-            {
-                return new ObjectResult(GuildRepository.APIKey());
-            }
-
             var guild = GuildRepository.GetGuild(key);
             if (guild == null)
             {
@@ -45,7 +40,7 @@ namespace GuildManagement.Controllers
             }
 
             GuildRepository.Add(guild);
-            return CreatedAtRoute("GetGuild", new { controller = "Guild", id = guild.Key }, guild);
+            return CreatedAtRoute("GetByID", new { controller = "Guild", key = guild.Key }, guild);
         }
 
         [HttpPut]
