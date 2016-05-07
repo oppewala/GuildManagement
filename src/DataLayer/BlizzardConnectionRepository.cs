@@ -1,10 +1,5 @@
 ﻿using GuildManagement.Framework;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -58,6 +53,24 @@ namespace GuildManagement.DataLayer
             character = character.ConvertJSON(call.Result);
 
             return character;
+        }
+
+        public Guild GetGuild(string name, string realm, bool getMembers = false)
+        {
+            string uri = _blizzardURI + "guild/" + realm + "/" + name + "?locale=en_US";
+            //https://us.api.battle.net/wow/guild/Caelestrasz/Windburst?locale=en_US&apikey=7jzkneux9z8ux4xvwzd3htuq29tfhcpb
+            if (getMembers)
+            {
+                uri += "&fields=members";
+            }
+
+            Task<string> call = CallBlizzard(uri);
+            call.Wait();
+
+            Guild guild = new Guild();
+            guild = guild.ConvertJSON(call.Result);
+
+            return guild;
         }
     }
 }

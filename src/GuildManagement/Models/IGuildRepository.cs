@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using GuildManagement.Framework;
 
 namespace GuildManagement.Models
@@ -13,5 +10,7 @@ namespace GuildManagement.Models
         Guild GetGuild(string key);
         IEnumerable<Guild> Delete(string key);
         IEnumerable<Guild> Update(string key, Guild guild);
+
+        IEnumerable<Guild> DownloadFromBlizzard(string name, string realm);
     }
 }

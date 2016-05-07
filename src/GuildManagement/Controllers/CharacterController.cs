@@ -46,7 +46,7 @@ namespace GuildManagement.Controllers
         [HttpPut]
         public IActionResult Update(string key, [FromBody] Character character)
         {
-            if (character == null || character.Key != key)
+            if (character == null || character.Key != Guid.Parse(key))
             {
                 return HttpBadRequest();
             }
