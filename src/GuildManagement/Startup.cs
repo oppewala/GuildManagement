@@ -56,6 +56,7 @@ namespace GuildManagement
             app.UseMvc();
         }
 
+        // Source: https://github.com/aspnet/MusicStore/blob/master/src/MusicStore/Startup.cs
         //This method is invoked when ASPNET_ENV is 'Development' or is not defined
         //The allowed values are Development,Staging and Production
         public void ConfigureDevelopment(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -75,6 +76,34 @@ namespace GuildManagement
             // to see what packages are used by the application
             // default path is: /runtimeinfo
             app.UseRuntimeInfoPage();
+
+            Configure(app, env, loggerFactory);
+        }
+
+        //This method is invoked when ASPNET_ENV is 'Staging'
+        //The allowed values are Development,Staging and Production
+        public void ConfigureStaging(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
+
+            // StatusCode pages to gracefully handle status codes 400-599.
+            app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
+
+            app.UseExceptionHandler("/Home/Error");
+
+            Configure(app, env, loggerFactory);
+        }
+
+        //This method is invoked when ASPNET_ENV is 'Production'
+        //The allowed values are Development,Staging and Production
+        public void ConfigureProduction(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
+
+            // StatusCode pages to gracefully handle status codes 400-599.
+            app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
+
+            app.UseExceptionHandler("/Home/Error");
 
             Configure(app, env, loggerFactory);
         }

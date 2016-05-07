@@ -3,7 +3,6 @@ using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using GuildManagement.Framework;
 
 namespace GuildManagement.Controllers
@@ -46,7 +45,7 @@ namespace GuildManagement.Controllers
         [HttpPut]
         public IActionResult Update(string key, [FromBody] Guild guild)
         {
-            if (guild == null || guild.Key != key)
+            if (guild == null || guild.Key != Guid.Parse(key))
             {
                 return HttpBadRequest();
             }
@@ -65,6 +64,20 @@ namespace GuildManagement.Controllers
         public void Delete(string key)
         {
             GuildRepository.Delete(key);
+        }
+
+        [HttpGet("/blizzapi/[controller]/{realm}/{name}")]
+        public IActionResult BlizzardGetGuild(string realm, string name)
+        {
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(realm))
+            {
+                return HttpBadRequest();
+            }
+
+            IEnumerable<Guild> guilds = GuildRepository.DownloadFromBlizzard(name, realm);
+            Guild guild = guilds.First(c => c.Name == name && c.Realm == realm);
+
+            return CreatedAtRoute("GetByID", new { controller = "Guild", key = guild.Key }, guild);
         }
     }
 }

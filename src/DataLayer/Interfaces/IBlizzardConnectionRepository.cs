@@ -9,5 +9,6 @@ namespace GuildManagement.DataLayer
     public interface IBlizzardConnectionRepository
     {
         Character GetCharacter(string name, string realm, bool getGuild = false);
+        Guild GetGuild(string name, string realm, bool getMembers = false);
     }
 }

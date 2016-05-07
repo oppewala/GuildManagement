@@ -1,12 +1,6 @@
 ﻿using GuildManagement.DataLayer;
 using GuildManagement.Framework;
-using Microsoft.AspNet.DataProtection;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GuildManagement.Models
 {
@@ -45,6 +39,12 @@ namespace GuildManagement.Models
         public IEnumerable<Guild> Update(string key, Guild guild)
         {
             return _databaseRepository.Update(key, guild);
+        }
+
+        public IEnumerable<Guild> DownloadFromBlizzard(string name, string realm)
+        {
+            Guild guild = _blizzardConnectionRepository.GetGuild(name, realm, getMembers: true);
+            return Add(guild);
         }
     }
 }
