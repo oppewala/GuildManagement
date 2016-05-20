@@ -11,7 +11,7 @@ namespace GuildManagement.Framework
         public string Username { get; set; }
         public string Password { get; set; }
 
-        List<Character> Characters { get; set; }
-        List<Guild> Guilds { get; set; }
+        //List<Character> Characters { get; set; }
+        //List<Guild> Guilds { get; set; }
     }
 }

@@ -1,10 +1,10 @@
-﻿{
-  "version": "1.0.0-*",
-  "description": "DataLayer Class Library",
-  "authors": [ "Arend" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+{
+    "version": "1.0.0-*",
+    "description": "GuildManagement.DataModel Class Library",
+    "authors": [ "Arend" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
     "frameworks": {
         "net451": {
             "dependencies": {

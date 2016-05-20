@@ -16,6 +16,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GuildManagement.classes", "
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DataLayer", "src\DataLayer\DataLayer.xproj", "{C66878D4-3BFF-49B2-9383-00D58A91A6BC}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GuildManagement.DataModel", "src\GuildManagement.DataModel\GuildManagement.DataModel.xproj", "{CCFFA8E0-A0EE-4336-ADF6-8C83F93700BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{C66878D4-3BFF-49B2-9383-00D58A91A6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C66878D4-3BFF-49B2-9383-00D58A91A6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C66878D4-3BFF-49B2-9383-00D58A91A6BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCFFA8E0-A0EE-4336-ADF6-8C83F93700BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCFFA8E0-A0EE-4336-ADF6-8C83F93700BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCFFA8E0-A0EE-4336-ADF6-8C83F93700BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCFFA8E0-A0EE-4336-ADF6-8C83F93700BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +48,6 @@ Global
 		{389C8F6A-EC07-4432-AB5C-4002C10A0706} = {9433CFFA-086C-49FC-9814-E47CB0653E22}
 		{E475DC8A-8C37-4783-9F15-047260F01361} = {9433CFFA-086C-49FC-9814-E47CB0653E22}
 		{C66878D4-3BFF-49B2-9383-00D58A91A6BC} = {9433CFFA-086C-49FC-9814-E47CB0653E22}
+		{CCFFA8E0-A0EE-4336-ADF6-8C83F93700BE} = {9433CFFA-086C-49FC-9814-E47CB0653E22}
 	EndGlobalSection
 EndGlobal
