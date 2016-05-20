@@ -7,8 +7,8 @@
 
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>c66878d4-3bff-49b2-9383-00d58a91a6bc</ProjectGuid>
-    <RootNamespace>DataLayer</RootNamespace>
+    <ProjectGuid>ccffa8e0-a0ee-4336-adf6-8c83f93700be</ProjectGuid>
+    <RootNamespace>GuildManagement.DataModel</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>
