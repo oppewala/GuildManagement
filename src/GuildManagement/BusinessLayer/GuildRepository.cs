@@ -1,6 +1,8 @@
 ﻿using GuildManagement.DataLayer;
+using GuildManagement.DataModel;
 using GuildManagement.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GuildManagement.Models
 {
@@ -8,15 +10,22 @@ namespace GuildManagement.Models
     {
         IDatabaseRepository _databaseRepository;
         IBlizzardConnectionRepository _blizzardConnectionRepository;
+        GuildManagementContext _guildContext;
 
-        public GuildRepository(IDatabaseRepository databaseRepository, IBlizzardConnectionRepository blizzardConnectionRepository)
+        public GuildRepository(GuildManagementContext guildContext, IBlizzardConnectionRepository blizzardConnectionRepository)
         {
-            _databaseRepository = databaseRepository;
+            _guildContext = guildContext;
+            _databaseRepository = null;
+            //_databaseRepository = databaseRepository;
             _blizzardConnectionRepository = blizzardConnectionRepository;
         }
 
         public IEnumerable<Guild> GetAllGuilds()
         {
+            var guilds = _guildContext.Guilds.OrderBy(g => g.Key);
+
+            return guilds;
+
             return _databaseRepository.GetAllGuilds();
         }
 

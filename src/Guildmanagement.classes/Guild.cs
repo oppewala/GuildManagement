@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Microsoft.Data.Entity.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace GuildManagement.Framework
 {
@@ -18,6 +20,7 @@ namespace GuildManagement.Framework
             Key = Guid.NewGuid();
         }
 
+        [Key]
         public Guid Key { get; set; }
 
         public string Name { get; set; }

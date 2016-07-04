@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using GuildManagement.Models;
 using GuildManagement.DataLayer;
+using GuildManagement.DataModel;
+using Microsoft.Data.Entity;
 
 namespace GuildManagement
 {
@@ -19,6 +21,7 @@ namespace GuildManagement
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                //.AddJsonFile($"config.json", optional: true)
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
@@ -34,6 +37,11 @@ namespace GuildManagement
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddEntityFramework()
+                    .AddSqlServer()
+                    .AddDbContext<GuildManagementContext>(options =>
+                        options.UseSqlServer(Configuration.Get<string>("Data:GuildManagementConnection:ConnectionString")));
 
             services.AddSingleton<IConfiguration>(sp => { return Configuration; });
 
@@ -89,7 +97,10 @@ namespace GuildManagement
             // StatusCode pages to gracefully handle status codes 400-599.
             app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
 
-            app.UseExceptionHandler("/Home/Error");
+            //app.UseExceptionHandler("/Home/Error");
+            app.UseDeveloperExceptionPage();
+
+            app.UseDatabaseErrorPage();
 
             Configure(app, env, loggerFactory);
         }
@@ -101,9 +112,13 @@ namespace GuildManagement
             loggerFactory.AddConsole(minLevel: LogLevel.Warning);
 
             // StatusCode pages to gracefully handle status codes 400-599.
-            app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
+            //app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
+            app.UseStatusCodePages();
 
             app.UseExceptionHandler("/Home/Error");
+            //app.UseDeveloperExceptionPage();
+
+            //app.UseDatabaseErrorPage();
 
             Configure(app, env, loggerFactory);
         }
