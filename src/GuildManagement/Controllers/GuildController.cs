@@ -4,18 +4,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GuildManagement.Framework;
+using Microsoft.Extensions.Logging;
 
 namespace GuildManagement.Controllers
 {
     [Route("api/[controller]")]
     public class GuildController : Controller
     {
+        private readonly ILogger<GuildController> _logger;
         [FromServices]
         public IGuildRepository GuildRepository { get; set; }
+
+        public GuildController(ILogger<GuildController> logger)
+        {
+            _logger = logger;
+        }
 
         [HttpGet]
         public IEnumerable<Guild> GetAllGuilds()
         {
+            _logger.LogError("TESTING");
             return GuildRepository.GetAllGuilds();
         }
 
