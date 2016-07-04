@@ -1,17 +1,24 @@
-﻿using GuildManagement.Models;
+﻿using GuildManagement.Business;
 using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using GuildManagement.Framework;
+using Microsoft.Extensions.Logging;
 
 namespace GuildManagement.Controllers
 {
     [Route("api/[controller]")]
     public class GuildController : Controller
     {
+        private readonly ILogger<GuildController> _logger;
         [FromServices]
         public IGuildRepository GuildRepository { get; set; }
+
+        public GuildController(ILogger<GuildController> logger)
+        {
+            _logger = logger;
+        }
 
         [HttpGet]
         public IEnumerable<Guild> GetAllGuilds()
@@ -60,7 +67,7 @@ namespace GuildManagement.Controllers
             return new NoContentResult();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{key}")]
         public void Delete(string key)
         {
             GuildRepository.Delete(key);

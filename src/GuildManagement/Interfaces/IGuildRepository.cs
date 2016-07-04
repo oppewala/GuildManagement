@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GuildManagement.Framework;
 
-namespace GuildManagement.Models
+namespace GuildManagement.Business
 {
     public interface IGuildRepository
     {

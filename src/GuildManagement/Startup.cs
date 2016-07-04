@@ -7,8 +7,10 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using GuildManagement.Models;
+using GuildManagement.Business;
 using GuildManagement.DataLayer;
+using GuildManagement.DataModel;
+using Microsoft.Data.Entity;
 
 namespace GuildManagement
 {
@@ -19,6 +21,7 @@ namespace GuildManagement
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                //.AddJsonFile($"config.json", optional: true)
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
@@ -35,11 +38,15 @@ namespace GuildManagement
             // Add framework services.
             services.AddMvc();
 
+            services.AddEntityFramework()
+                    .AddSqlServer()
+                    .AddDbContext<GuildManagementContext>(options =>
+                        options.UseSqlServer(Configuration.Get<string>("Data:GuildManagementConnection:ConnectionString")));
+
             services.AddSingleton<IConfiguration>(sp => { return Configuration; });
 
             services.AddSingleton<ICharacterRepository, CharacterRepository>();
             services.AddSingleton<IGuildRepository, GuildRepository>();
-            services.AddTransient<IDatabaseRepository, DatabaseRepository>();
             services.AddTransient<IBlizzardConnectionRepository, BlizzardConnectionRepository>();
         }
 
@@ -61,21 +68,13 @@ namespace GuildManagement
         //The allowed values are Development,Staging and Production
         public void ConfigureDevelopment(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
-
-            // StatusCode pages to gracefully handle status codes 400-599.
-            app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
+            loggerFactory.AddConsole(minLevel: LogLevel.Information);
 
             // Display custom error page in production when error occurs
             // During development use the ErrorPage middleware to display error information in the browser
             app.UseDeveloperExceptionPage();
 
             app.UseDatabaseErrorPage();
-
-            // Add the runtime information page that can be used by developers
-            // to see what packages are used by the application
-            // default path is: /runtimeinfo
-            app.UseRuntimeInfoPage();
 
             Configure(app, env, loggerFactory);
         }
@@ -87,9 +86,11 @@ namespace GuildManagement
             loggerFactory.AddConsole(minLevel: LogLevel.Warning);
 
             // StatusCode pages to gracefully handle status codes 400-599.
-            app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
+            app.UseStatusCodePages();
+            //app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
 
-            app.UseExceptionHandler("/Home/Error");
+            app.UseDeveloperExceptionPage();
+            //app.UseExceptionHandler("/Home/Error");
 
             Configure(app, env, loggerFactory);
         }
@@ -101,9 +102,11 @@ namespace GuildManagement
             loggerFactory.AddConsole(minLevel: LogLevel.Warning);
 
             // StatusCode pages to gracefully handle status codes 400-599.
-            app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
+            app.UseStatusCodePages();
+            //app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
 
-            app.UseExceptionHandler("/Home/Error");
+            app.UseDeveloperExceptionPage();
+            //app.UseExceptionHandler("/Home/Error");
 
             Configure(app, env, loggerFactory);
         }

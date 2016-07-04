@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace GuildManagement.Framework
 {
     public class User
     {
+        [Key]
         public Guid Key { get; set; }
 
         public string Email { get; set; }

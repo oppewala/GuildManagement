@@ -1,0 +1,7 @@
+﻿{
+    "Data": {
+      "GuildManagementConnection": {
+        "ConnectionString": "Server=(localdb)\\ProjectsV13;Database=GuildManagementDB;Trusted_Connection=true;MultipleActiveResultSets=true;"
+      }
+    }
+}
