@@ -3,17 +3,6 @@
   "version": 2,
   "targets": {
     "DNX,Version=v4.5.1": {
-      "DataLayer/1.0.0": {
-        "type": "project",
-        "framework": "DNX,Version=v4.5.1",
-        "dependencies": {
-          "EntityFramework.Core": "7.0.0-rc1-final",
-          "Guildmanagement.classes": "1.0.0",
-          "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
-          "Newtonsoft.Json": "8.0.3",
-          "System.Net.Http": "4.0.0"
-        }
-      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -1944,17 +1933,6 @@
       }
     },
     "DNXCore,Version=v5.0": {
-      "DataLayer/1.0.0": {
-        "type": "project",
-        "framework": "DNXCore,Version=v5.0",
-        "dependencies": {
-          "EntityFramework.Core": "7.0.0-rc1-final",
-          "Guildmanagement.classes": "1.0.0",
-          "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
-          "Newtonsoft.Json": "8.0.3",
-          "System.Net.Http": "4.0.0"
-        }
-      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -4507,17 +4485,6 @@
       }
     },
     "DNX,Version=v4.5.1/win7-x86": {
-      "DataLayer/1.0.0": {
-        "type": "project",
-        "framework": "DNX,Version=v4.5.1",
-        "dependencies": {
-          "EntityFramework.Core": "7.0.0-rc1-final",
-          "Guildmanagement.classes": "1.0.0",
-          "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
-          "Newtonsoft.Json": "8.0.3",
-          "System.Net.Http": "4.0.0"
-        }
-      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -6457,17 +6424,6 @@
       }
     },
     "DNX,Version=v4.5.1/win7-x64": {
-      "DataLayer/1.0.0": {
-        "type": "project",
-        "framework": "DNX,Version=v4.5.1",
-        "dependencies": {
-          "EntityFramework.Core": "7.0.0-rc1-final",
-          "Guildmanagement.classes": "1.0.0",
-          "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
-          "Newtonsoft.Json": "8.0.3",
-          "System.Net.Http": "4.0.0"
-        }
-      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -8407,17 +8363,6 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x86": {
-      "DataLayer/1.0.0": {
-        "type": "project",
-        "framework": "DNXCore,Version=v5.0",
-        "dependencies": {
-          "EntityFramework.Core": "7.0.0-rc1-final",
-          "Guildmanagement.classes": "1.0.0",
-          "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
-          "Newtonsoft.Json": "8.0.3",
-          "System.Net.Http": "4.0.0"
-        }
-      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -11476,17 +11421,6 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x64": {
-      "DataLayer/1.0.0": {
-        "type": "project",
-        "framework": "DNXCore,Version=v5.0",
-        "dependencies": {
-          "EntityFramework.Core": "7.0.0-rc1-final",
-          "Guildmanagement.classes": "1.0.0",
-          "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
-          "Newtonsoft.Json": "8.0.3",
-          "System.Net.Http": "4.0.0"
-        }
-      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -14546,10 +14480,6 @@
     }
   },
   "libraries": {
-    "DataLayer/1.0.0": {
-      "type": "project",
-      "path": "../DataLayer/project.json"
-    },
     "Guildmanagement.classes/1.0.0": {
       "type": "project",
       "path": "../Guildmanagement.classes/project.json"
@@ -19909,7 +19839,6 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "DataLayer >= 1.0.0-*",
       "Guildmanagement.classes >= 1.0.0-*",
       "GuildManagement.DataModel >= 1.0.0-*",
       "Microsoft.AspNet.Diagnostics >= 1.0.0-rc1-final",

@@ -5,7 +5,6 @@
   },
 
   "dependencies": {
-    "DataLayer": "1.0.0-*",
     "Guildmanagement.classes": "1.0.0-*",
     "GuildManagement.DataModel": "1.0.0-*",
     "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",

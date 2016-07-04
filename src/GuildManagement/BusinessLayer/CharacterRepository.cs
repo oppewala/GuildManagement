@@ -1,4 +1,5 @@
 ﻿using GuildManagement.DataLayer;
+using GuildManagement.DataModel;
 using GuildManagement.Framework;
 using Microsoft.AspNet.DataProtection;
 using Microsoft.Extensions.Configuration;
@@ -8,43 +9,68 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GuildManagement.Models
+namespace GuildManagement.Business
 {
     public class CharacterRepository : ICharacterRepository
     {
-        IDatabaseRepository _databaseRepository;
+        GuildManagementContext _guildContext;
         IBlizzardConnectionRepository _blizzardConnectionRepository;
 
-        public CharacterRepository(IDatabaseRepository databaseRepository, IBlizzardConnectionRepository blizzardConnectionRepository)
+        public CharacterRepository(GuildManagementContext guildContext, IBlizzardConnectionRepository blizzardConnectionRepository)
         {
-            _databaseRepository = databaseRepository;
+            _guildContext = guildContext;
             _blizzardConnectionRepository = blizzardConnectionRepository;
         }
 
-        public IEnumerable<Character> GetAll()
+        public IEnumerable<Character> GetAllCharacters()
         {
-            return _databaseRepository.GetAllCharacters();
+            return _guildContext.Characters.OrderBy(c => c.Realm).ThenBy(c => c.Name);
+        }
+        public IEnumerable<Character> GetCharactersByGuild(string guildKey)
+        {
+            return _guildContext.Characters.Where(c => c.Guild.Key == Guid.Parse(guildKey));
         }
 
         public IEnumerable<Character> Add(Character character)
         {
-            return _databaseRepository.Add(character);
+            _guildContext.Add(character);
+            _guildContext.SaveChanges();
+
+            return GetAllCharacters();
         }
 
-        public Character GetByKey(string key)
+        public Character GetCharacter(string key)
         {
-            return _databaseRepository.GetCharacter(key);
+            return _guildContext.Characters.FirstOrDefault(g => g.Key == Guid.Parse(key));
         }
 
         public IEnumerable<Character> Delete(string key)
         {
+            Character character = GetCharacter(key);
+            if (character == null)
+            {
+                return GetAllCharacters();
+            }
 
-            return _databaseRepository.DeleteCharacter(key);
+            _guildContext.Remove(character);
+            _guildContext.SaveChanges();
+
+            return GetAllCharacters();
+        }
+        public IEnumerable<Character> DeleteByGuild(string guildKey)
+        {
+            _guildContext.RemoveRange(GetCharactersByGuild(guildKey));
+            _guildContext.SaveChanges();
+
+            return GetCharactersByGuild(guildKey);
         }
 
         public IEnumerable<Character> Update(string key, Character character)
         {
-            return _databaseRepository.Update(key, character);
+            Delete(key);
+            Add(character);
+
+            return GetAllCharacters();
         }
 
         public IEnumerable<Character> DownloadFromBlizzard(string name, string realm)

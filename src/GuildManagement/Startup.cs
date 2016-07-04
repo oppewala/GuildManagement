@@ -7,7 +7,7 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using GuildManagement.Models;
+using GuildManagement.Business;
 using GuildManagement.DataLayer;
 using GuildManagement.DataModel;
 using Microsoft.Data.Entity;
@@ -47,7 +47,6 @@ namespace GuildManagement
 
             services.AddSingleton<ICharacterRepository, CharacterRepository>();
             services.AddSingleton<IGuildRepository, GuildRepository>();
-            services.AddTransient<IDatabaseRepository, DatabaseRepository>();
             services.AddTransient<IBlizzardConnectionRepository, BlizzardConnectionRepository>();
         }
 

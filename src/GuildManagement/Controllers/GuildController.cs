@@ -1,4 +1,4 @@
-﻿using GuildManagement.Models;
+﻿using GuildManagement.Business;
 using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,6 @@ namespace GuildManagement.Controllers
         [HttpGet]
         public IEnumerable<Guild> GetAllGuilds()
         {
-            _logger.LogError("TESTING");
             return GuildRepository.GetAllGuilds();
         }
 
@@ -68,7 +67,7 @@ namespace GuildManagement.Controllers
             return new NoContentResult();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{key}")]
         public void Delete(string key)
         {
             GuildRepository.Delete(key);

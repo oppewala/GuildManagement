@@ -1,5 +1,5 @@
 ﻿using GuildManagement.Framework;
-using GuildManagement.Models;
+using GuildManagement.Business;
 using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,13 +17,15 @@ namespace GuildManagement.Controllers
         [HttpGet]
         public IEnumerable<Character> GetAllGuilds()
         {
-            return CharacterRepository.GetAll();
+            List<Character> characters = CharacterRepository.GetAllCharacters().ToList();
+
+            return CharacterRepository.GetAllCharacters();
         }
 
         [HttpGet("{key}", Name = "GetByID")]
         public IActionResult GetByID(string key)
         {
-            var guild = CharacterRepository.GetByKey(key);
+            var guild = CharacterRepository.GetCharacter(key);
             if (guild == null)
             {
                 return HttpNotFound();
@@ -51,7 +53,7 @@ namespace GuildManagement.Controllers
                 return HttpBadRequest();
             }
 
-            Character storedCharacter = CharacterRepository.GetByKey(key);
+            Character storedCharacter = CharacterRepository.GetCharacter(key);
             if (storedCharacter == null)
             {
                 return HttpNotFound();
