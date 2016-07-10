@@ -12,10 +12,9 @@ namespace GuildManagement.Business
         IEnumerable<Character> GetAllCharacters();
         IEnumerable<Character> GetCharactersByGuild(string guildKey);
         Character GetCharacter(string key);
+        Character GetCharacter(string realm, string name);
         IEnumerable<Character> Delete(string key);
         IEnumerable<Character> DeleteByGuild(string guildKey);
         IEnumerable<Character> Update(string key, Character character);
-
-        IEnumerable<Character> DownloadFromBlizzard(string name, string realm);
     }
 }

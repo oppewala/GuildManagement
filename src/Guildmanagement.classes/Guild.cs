@@ -6,10 +6,37 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GuildManagement.Framework
 {
+    public class CustomGuildMembersConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Integer)
+            {
+                return null;
+            }
+
+            return serializer.Deserialize<List<Character>>(reader);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            serializer.Serialize(writer, value);
+        }
+    }
+
     public class Guild
     {
         public Guild ConvertJSON(string json)
         {
+            //var sett = new JsonSerializerSettings
+            //{
+                
+            //}
             Guild guild = JsonConvert.DeserializeObject<Guild>(json);
 
             return guild;
@@ -30,6 +57,7 @@ namespace GuildManagement.Framework
         public string Website { get; set; }
         public Guid?  Owner { get; set; }
 
+        [JsonConverter(typeof(CustomGuildMembersConverter))]
         public List<Character> Members { get; set; }
     }
 }

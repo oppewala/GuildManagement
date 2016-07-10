@@ -29,7 +29,7 @@ namespace GuildManagement.Framework
 
         [JsonProperty("class")]
         private int ClassID { get; set; }
-        [JsonProperty(Required = Required.Default)]
+        [JsonIgnore]
         public GameClass Class
         {
             get
@@ -45,7 +45,7 @@ namespace GuildManagement.Framework
 
         [JsonProperty("race")]
         private int RaceID { get; set; }
-        [JsonProperty(Required = Required.Default)]
+        [JsonIgnore]
         public Race Race
         {
             get
@@ -60,7 +60,7 @@ namespace GuildManagement.Framework
 
         [JsonProperty("gender")]
         private int GenderID { get; set; }
-        [JsonProperty(Required = Required.Default)]
+        [JsonIgnore]
         public Gender Gender
         {
             get

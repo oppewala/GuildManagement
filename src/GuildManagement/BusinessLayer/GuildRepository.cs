@@ -1,6 +1,7 @@
 ﻿using GuildManagement.DataLayer;
 using GuildManagement.DataModel;
 using GuildManagement.Framework;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -21,16 +22,16 @@ namespace GuildManagement.Business
 
         public IEnumerable<Guild> GetAllGuilds()
         {
-            return _guildContext.Guilds.OrderBy(g => g.Realm).ThenBy(g => g.Name);
+            return _guildContext.Guilds.AsNoTracking().OrderBy(g => g.Realm).ThenBy(g => g.Name);
         }
 
         public Guild GetGuild(string key)
         {
-            return _guildContext.Guilds.FirstOrDefault(g => g.Key == Guid.Parse(key));
+            return _guildContext.Guilds.AsNoTracking().FirstOrDefault(g => g.Key == Guid.Parse(key));
         }
         public Guild GetGuild(string realm, string name)
         {
-            return _guildContext.Guilds.FirstOrDefault(g => g.Realm == realm && g.Name == name);
+            return _guildContext.Guilds.AsNoTracking().FirstOrDefault(g => g.Realm == realm && g.Name == name);
         }
 
         public IEnumerable<Guild> Add(Guild guild)
@@ -40,7 +41,10 @@ namespace GuildManagement.Business
             {
                 Update(oldGuild.Key.ToString(), guild);
             }
-            _guildContext.Add(guild);
+            else
+            {
+                _guildContext.Add(guild);
+            }
             _guildContext.SaveChanges();
 
             return GetAllGuilds();
@@ -54,7 +58,7 @@ namespace GuildManagement.Business
                 return GetAllGuilds();
             }
 
-            ICharacterRepository characterRepository = new CharacterRepository(_guildContext, _blizzardConnectionRepository);
+            ICharacterRepository characterRepository = new CharacterRepository(_guildContext);
             characterRepository.DeleteByGuild(key);
 
             _guildContext.Remove(guild);
@@ -71,12 +75,6 @@ namespace GuildManagement.Business
             Add(guild);
 
             return GetAllGuilds();
-        }
-
-        public IEnumerable<Guild> DownloadFromBlizzard(string name, string realm)
-        {
-            Guild guild = _blizzardConnectionRepository.GetGuild(name, realm, getMembers: true);
-            return Add(guild);
         }
     }
 }
