@@ -23,8 +23,11 @@ namespace GuildManagement.Framework
         [Key]
         public Guid Key { get; set; }
 
+        [JsonProperty("name")]
         public string Name { get; set; }
+        [JsonProperty("realm")]
         public string Realm { get; set; }
+        [JsonProperty("battlegroup")]
         public string Battlegroup { get; set; }
 
         [JsonProperty("class")]
@@ -94,5 +97,11 @@ namespace GuildManagement.Framework
     {
         Male = 0,
         Female = 1
+    }
+
+    public class GuildMember
+    {
+        Character Character { get; set; }
+        int Rank { get; set; }
     }
 }

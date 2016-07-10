@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json.Linq;
 
 namespace GuildManagement.Framework
 {
@@ -20,7 +21,12 @@ namespace GuildManagement.Framework
                 return null;
             }
 
-            return serializer.Deserialize<List<Character>>(reader);
+            //JArray jArray = JArray.Load(reader);
+            //List<GuildMember> charactersA = jArray.ToObject<List<GuildMember>>();
+            //Character[] characters = JsonConvert.DeserializeObject<Character[]>(jArray.ToString());
+
+            //List<GuildMember> characters = serializer.Deserialize<List<GuildMember>>(reader);
+            return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

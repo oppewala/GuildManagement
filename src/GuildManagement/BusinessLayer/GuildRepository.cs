@@ -12,26 +12,26 @@ namespace GuildManagement.Business
     public class GuildRepository : IGuildRepository
     {
         IBlizzardConnectionRepository _blizzardConnectionRepository;
-        GuildManagementContext _guildContext;
+        IDatabaseConnectionRepository _databaseConnectionRepository;
 
-        public GuildRepository(GuildManagementContext guildContext, IBlizzardConnectionRepository blizzardConnectionRepository)
+        public GuildRepository(IDatabaseConnectionRepository databaseConnectionRepository, IBlizzardConnectionRepository blizzardConnectionRepository)
         {
-            _guildContext = guildContext;
+            _databaseConnectionRepository = databaseConnectionRepository;
             _blizzardConnectionRepository = blizzardConnectionRepository;
         }
 
         public IEnumerable<Guild> GetAllGuilds()
         {
-            return _guildContext.Guilds.AsNoTracking().OrderBy(g => g.Realm).ThenBy(g => g.Name);
+            return _databaseConnectionRepository.GetGuilds().OrderBy(g => g.Realm).ThenBy(g => g.Name);
         }
 
         public Guild GetGuild(string key)
         {
-            return _guildContext.Guilds.AsNoTracking().FirstOrDefault(g => g.Key == Guid.Parse(key));
+            return _databaseConnectionRepository.GetGuilds().FirstOrDefault(g => g.Key == Guid.Parse(key));
         }
         public Guild GetGuild(string realm, string name)
         {
-            return _guildContext.Guilds.AsNoTracking().FirstOrDefault(g => g.Realm == realm && g.Name == name);
+            return _databaseConnectionRepository.GetGuilds().FirstOrDefault(g => g.Realm == realm && g.Name == name);
         }
 
         public IEnumerable<Guild> Add(Guild guild)
@@ -43,9 +43,8 @@ namespace GuildManagement.Business
             }
             else
             {
-                _guildContext.Add(guild);
+                _databaseConnectionRepository.AddGuild(guild);
             }
-            _guildContext.SaveChanges();
 
             return GetAllGuilds();
         }
@@ -58,11 +57,10 @@ namespace GuildManagement.Business
                 return GetAllGuilds();
             }
 
-            ICharacterRepository characterRepository = new CharacterRepository(_guildContext);
-            characterRepository.DeleteByGuild(key);
+            ICharacterRepository characterRepository = new CharacterRepository(_databaseConnectionRepository);
+            IEnumerable<Character> chars = characterRepository.DeleteByGuild(key);
 
-            _guildContext.Remove(guild);
-            _guildContext.SaveChanges();
+            _databaseConnectionRepository.DeleteGuild(guild);
 
             return GetAllGuilds();
         }
