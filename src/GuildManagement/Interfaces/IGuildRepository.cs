@@ -8,9 +8,8 @@ namespace GuildManagement.Business
         IEnumerable<Guild> Add(Guild guild);
         IEnumerable<Guild> GetAllGuilds();
         Guild GetGuild(string key);
+        Guild GetGuild(string realm, string name);
         IEnumerable<Guild> Delete(string key);
         IEnumerable<Guild> Update(string key, Guild guild);
-
-        IEnumerable<Guild> DownloadFromBlizzard(string name, string realm);
     }
 }

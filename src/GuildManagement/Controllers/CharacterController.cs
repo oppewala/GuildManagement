@@ -68,19 +68,5 @@ namespace GuildManagement.Controllers
         {
             CharacterRepository.Delete(key);
         }
-
-        [HttpGet("/blizzapi/[controller]/{realm}/{name}")]
-        public IActionResult BlizzardGetCharacter(string realm, string name)
-        {
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(realm))
-            {
-                return HttpBadRequest();
-            }
-
-            IEnumerable<Character> characters = CharacterRepository.DownloadFromBlizzard(name, realm);
-            Character character = characters.First(c => c.Name == name && c.Realm == realm);
-
-            return CreatedAtRoute("GetByID", new { controller = "Character", key = character.Key }, character);
-        }
     }
 }

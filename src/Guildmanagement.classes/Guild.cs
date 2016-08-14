@@ -3,13 +3,46 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json.Linq;
 
 namespace GuildManagement.Framework
 {
+    public class CustomGuildMembersConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Integer)
+            {
+                return null;
+            }
+
+            //JArray jArray = JArray.Load(reader);
+            //List<GuildMember> charactersA = jArray.ToObject<List<GuildMember>>();
+            //Character[] characters = JsonConvert.DeserializeObject<Character[]>(jArray.ToString());
+
+            //List<GuildMember> characters = serializer.Deserialize<List<GuildMember>>(reader);
+            return null;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            serializer.Serialize(writer, value);
+        }
+    }
+
     public class Guild
     {
         public Guild ConvertJSON(string json)
         {
+            //var sett = new JsonSerializerSettings
+            //{
+                
+            //}
             Guild guild = JsonConvert.DeserializeObject<Guild>(json);
 
             return guild;
@@ -30,6 +63,7 @@ namespace GuildManagement.Framework
         public string Website { get; set; }
         public Guid?  Owner { get; set; }
 
+        [JsonConverter(typeof(CustomGuildMembersConverter))]
         public List<Character> Members { get; set; }
     }
 }

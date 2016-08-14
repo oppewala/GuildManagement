@@ -11,6 +11,7 @@ using GuildManagement.Business;
 using GuildManagement.DataLayer;
 using GuildManagement.DataModel;
 using Microsoft.Data.Entity;
+using Newtonsoft.Json.Serialization;
 
 namespace GuildManagement
 {
@@ -36,7 +37,8 @@ namespace GuildManagement
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(a => a.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
             services.AddEntityFramework()
                     .AddSqlServer()
@@ -45,9 +47,12 @@ namespace GuildManagement
 
             services.AddSingleton<IConfiguration>(sp => { return Configuration; });
 
-            services.AddSingleton<ICharacterRepository, CharacterRepository>();
-            services.AddSingleton<IGuildRepository, GuildRepository>();
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<IGuildRepository, GuildRepository>();
+            services.AddScoped<IBlizzardSyncRepository, BlizzardSyncRepository>();
+
             services.AddTransient<IBlizzardConnectionRepository, BlizzardConnectionRepository>();
+            services.AddTransient<IDatabaseConnectionRepository, DatabaseConnectionRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

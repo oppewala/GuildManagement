@@ -11,14 +11,8 @@ namespace GuildManagement.Controllers
     [Route("api/[controller]")]
     public class GuildController : Controller
     {
-        private readonly ILogger<GuildController> _logger;
         [FromServices]
         public IGuildRepository GuildRepository { get; set; }
-
-        public GuildController(ILogger<GuildController> logger)
-        {
-            _logger = logger;
-        }
 
         [HttpGet]
         public IEnumerable<Guild> GetAllGuilds()
@@ -71,20 +65,6 @@ namespace GuildManagement.Controllers
         public void Delete(string key)
         {
             GuildRepository.Delete(key);
-        }
-
-        [HttpGet("/blizzapi/[controller]/{realm}/{name}")]
-        public IActionResult BlizzardGetGuild(string realm, string name)
-        {
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(realm))
-            {
-                return HttpBadRequest();
-            }
-
-            IEnumerable<Guild> guilds = GuildRepository.DownloadFromBlizzard(name, realm);
-            Guild guild = guilds.First(c => c.Name == name && c.Realm == realm);
-
-            return CreatedAtRoute("GetByID", new { controller = "Guild", key = guild.Key }, guild);
         }
     }
 }
